@@ -1,0 +1,17 @@
+init:
+  cmake -B build
+
+init_windows:
+  cmake -B build -DCMAKE_TOOLCHAIN_FILE=./toolchain.cmake
+
+build:
+  cmake --build build
+
+run:
+  #!/usr/bin/bash
+  just build
+  name=$(cat build/CMakeCache.txt | grep CMAKE_PROJECT_NAME | awk -F '=' '{print $2}') 
+  ./build/$name.exe
+
+clean:
+  rm -rf build
